@@ -65,8 +65,19 @@ new_project() {
     mkdir -p "$PROJECT_DIR"
     touch "$PROJECT_DIR/.project.sh"
     touch "$PROJECT_DIR/README.md"
+    echo ".gitattributes" > "$PROJECT_DIR/.gitignore"
+    echo ".vscode" > "$PROJECT_DIR/.gitignore"
+    echo "build" > "$PROJECT_DIR/.gitignore"
+    echo "tmp" > "$PROJECT_DIR/.gitignore"
+    touch "$PROJECT_DIR/.gitattributes"
     if [ ! -d "$PROJECT_DIR/.git" ]; then
         git init "$PROJECT_DIR"
     fi
     cd "$PROJECT_DIR"
+    git add --all .
+    git commit -m "Initial commit."
+}
+
+clone() { 
+  git clone "$1" "$PROJECTS_ROOT/$2" && use "$2"
 }
