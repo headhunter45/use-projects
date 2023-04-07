@@ -38,16 +38,16 @@ use () {
     # TODO: Add a variable that can be set in the project .zshrc or .bashrc file to not detect and run an editor. i.e. .zshrc runs qb64 and then sets some variable to 1 to disable these checks to launch a different editor.
     if [ -d .vscode ]; then
       # VS Code settings found
-      code . & >/dev/null 2>&1
+      code . >/dev/null 2>&1 &
     elif [ -n "$XCODE_WORKSPACES" ]; then
       # XCode workspace found
       while IFS= read -r line; do
-        open "$line" & >/dev/null 2>&1
+        open "$line" >/dev/null 2>&1 &
       done <<< "$XCODE_WORKSPACES"
     elif [ -n "$XCODE_PROJECTS" ]; then
       # XCode project found
       while IFS= read -r line; do
-        open "$line" & >/dev/null 2>&1
+        open "$line" >/dev/null 2>&1 &
       done <<< "$XCODE_PROJECTS"
     elif [ -f .idea/misc.xml ]; then
       # IntelliJ project found
@@ -58,17 +58,17 @@ use () {
       if [ "Android" = "$INTELLIJ_PROJECT_TYPE" ]; then
         # Android Studio project found
         # TODO: Make this work for linux is it studio.sh? What is it under WSL or git bash?
-        open -a /Applications/Android\ Studio.app . & >/dev/null 2>&1
+        open -a /Applications/Android\ Studio.app . >/dev/null 2>&1 &
       else
         # By default IntelliJ projects don't have a project type so all others should open with IntelliJ
         echo $INTELLIJ_PROJECT_TYPE
         if [ -d /Applications/IntelliJ.app ]; then
-          open /Applications/IntelliJ.app . & >/dev/null 2>&1
+          open /Applications/IntelliJ.app . >/dev/null 2>&1 &
         elif [ command -v idea64 ]; then
-          idea64 . & >/dev/null 2>&1
+          idea64 . >/dev/null 2>&1 &
         else
           # We can't find IntelliJ so just launch the default IDE
-          eval $DEFAULT_IDE & >/dev/null 2>&1
+          eval $DEFAULT_IDE >/dev/null 2>&1 &
         fi
       fi
     else
